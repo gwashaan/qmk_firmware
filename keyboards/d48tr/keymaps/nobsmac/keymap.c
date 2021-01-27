@@ -32,6 +32,8 @@ enum custom_keycodes {
     SND_ID,                     //Send ID
     RST_MOD,                    //Reset Modefier Key
     SFT_SPC,                    //SHIFT & Space
+    MS_L,                       //MS_BOTTON1
+    MS_R,                       //MS_BOTTON2
 };
 
 //Alias
@@ -126,7 +128,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
    MO(_EMACS),   KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,  A(KC_LEFT), KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R,A(KC_RGHT),
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-    MO(_META),  KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,   _______,KC_MS_BTN1,KC_MS_BTN3,KC_MS_BTN2,_______,_______,
+    MO(_META),  KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,     _______,    MS_L,KC_MS_BTN3,  MS_R, _______, _______,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
       RST_MOD, _______, _______, _______, _______, _______,     _______, MO(_NMB),_______, _______, _______, RST_MOD
   //|-----------------------------------------------------|   |-----------------------------------------------------'
@@ -225,6 +227,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           clear_keyboard();
           layer_move(_QWERTY);
         }
+      return false;
+      break;
+
+    case MS_L:
+      if (record->event.pressed) {
+        mouse_btn1 = true;
+      } else {
+        mouse_btn1 = false;
+      }
+      return false;
+      break;
+
+    case MS_R:
+      if (record->event.pressed) {
+        mouse_btn2 = true;
+      } else {
+        mouse_btn2 = false;
+      }
       return false;
       break;
 

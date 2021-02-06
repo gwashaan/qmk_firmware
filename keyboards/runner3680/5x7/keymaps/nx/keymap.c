@@ -1,9 +1,12 @@
 #include QMK_KEYBOARD_H
+
+/*
 #ifdef SSD1306OLED
   #include "ssd1306.h"
 #endif
 #include "keymap_jp.h"
 #include "action_layer.h"
+*/
 
 #ifdef PROTOCOL_LUFA
   #include "lufa.h"
@@ -12,18 +15,20 @@
 
 extern keymap_config_t keymap_config;
 
+
+/*
 #ifdef RGBLIGHT_ENABLE
 //Following line allows macro to read current RGB settings
 extern rgblight_config_t rgblight_config;
 #endif
 
 extern uint8_t is_master;
-
+*/
 
 // Layer
 enum layer_number {
     _NUM = 0,		//Default Layer For NUM
-	_CMD,			//Layer For CMD
+	  _CMD,			//Layer For CMD
     _SLCT,           //Layer For Select
     _ABC            //Layer For alfabet
 
@@ -39,10 +44,12 @@ qk_tap_dance_action_t tap_dance_actions[] = {
   [TD_KCANM] = ACTION_TAP_DANCE_DUAL_ROLE(KC_A, _NUM),
 };
 
+/*
 //Sample Macro for KC
 enum macro_keycodes {
   KC_SAMPLEMACRO,
 };
+*/
 
 //Special KeyCode
 enum custom_keycodes {
@@ -55,8 +62,6 @@ enum custom_keycodes {
 //Alias
 #define MT_SE LT(_SLCT,KC_ESC)     //hold:"SLCT"   tap:"ESC"
 #define MT_CE LT(_CMD,KC_ENTER)     //hold:"CMD"    tap:"ENTER"
-
-
 
 //Keymap
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -91,9 +96,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_SLCT] = LAYOUT( \
     //,--------------------------------------------------------------|   |---------------------------------------------------------------.
-        _______, _______, _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______,       KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,
     //|--------+--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|
-        _______, _______, _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______,       KC_F8,   KC_F9,  KC_F10,  KC_F11,  KC_F12,  KC_F13,  KC_F14,
     //|--------+--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|
         _______, _______, _______, _______, _______, _______, _______,        KC_C,    KC_F,    KC_G,    KC_E, _______, _______, _______,
     //|--------+--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------+--------|

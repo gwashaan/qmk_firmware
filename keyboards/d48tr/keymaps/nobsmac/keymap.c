@@ -294,7 +294,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
             break;
 
-          case JP_GRV:
+          case KC_ESC:
             if(record->event.pressed){
               register_code(KC_EQL);
               EXCEPTIONALY_SHIFT_PRESSED = true;

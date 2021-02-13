@@ -9,6 +9,7 @@
 //Declare layers
 enum layer_number {
     _QWERTY = 0,
+    _HRMNY,
     _NMB,
     _EMACS,
     _META,
@@ -37,6 +38,8 @@ enum custom_keycodes {
 #define MT_NE LT(_NMB,KC_ENT)     //hold:"NMB" tap:"Enter"
 #define MT_FK LT(_FN,KC_K)        //hold:"Function" tap:"k"
 #define MT_FD LT(_FN,KC_D)        //hold:"Function" tap:"D"
+#define MT_FT LT(_FN,KC_T)        //hold:"Function" tap:"T"
+#define MT_FE LT(_FN,KC_E)        //hold:"Function" tap:"E"
 #define MT_SS LSFT_T(KC_SPC)      //hold:"Shift" tap:"Space"
 
 #define MC_PSC G(S(KC_S))         //Print screen
@@ -70,11 +73,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_QWERTY] = LAYOUT( \
   //,-----------------------------------------------------|   |------------------------------------------------------.
-	     KC_ESC,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,        KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, KC_MINS,
+	   KC_ESC,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,        KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, KC_MINS,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
    MO(_EMACS),    KC_A,    KC_S,   MT_FD,    KC_F,   KC_G,         KC_H,    KC_J,   MT_FK,    KC_L, KC_SCLN, JP_QUOT,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
         MT_MT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,        KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,RCS_T(JP_PIPE),
+  //|--------+--------+--------+--------+--------+--------/   \--------+--------+--------+---------+--------+--------'
+                        KC_LCTL, KC_MHEN,   MT_SS, KC_LGUI,     KC_RGUI,   MT_NE, KC_HENK,  KC_RALT
+  //                  `--------+--------+--------+--------'   `--------+--------+--------+---------'
+  ),
+
+  [_HRMNY] = LAYOUT( \
+  //,-----------------------------------------------------|   |------------------------------------------------------.
+       KC_ESC,    KC_Q,    KC_W,    KC_R,    KC_N,    KC_F,        KC_J,    KC_U,    KC_O,    KC_L,    KC_P, KC_MINS,
+  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
+   MO(_EMACS),    KC_K,    KC_S,   MT_FT,    KC_H,    KC_M,        KC_G,    KC_I,   MT_FE,    KC_A,    KC_Y, JP_QUOT,
+  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
+        MT_MT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,     KC_MINS,    KC_D, KC_COMM,  KC_DOT, KC_SLSH,RCS_T(JP_PIPE),
   //|--------+--------+--------+--------+--------+--------/   \--------+--------+--------+---------+--------+--------'
                         KC_LCTL, KC_MHEN,   MT_SS, KC_LGUI,     KC_RGUI,   MT_NE, KC_HENK,  KC_RALT
   //                  `--------+--------+--------+--------'   `--------+--------+--------+---------'
@@ -106,7 +121,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_META] = LAYOUT( \
   //,-----------------------------------------------------|   |-----------------------------------------------------.
-       SND_ID,_______,_______,C(KC_END),C(KC_PGDN),C(KC_PGUP),  _______, _______,S(KC_TAB),_______, _______, _______,
+       SND_ID,_______,_______,C(KC_END),C(KC_PGDN),C(KC_PGUP),  _______, _______,S(KC_TAB),DF(_QWERTY),DF(_HRMNY), _______,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
       _______,C(KC_HOME),_______,C(KC_DEL),C(KC_F),C(KC_H), C(KC_BSPC),C(KC_LEFT),C(KC_DOWN),C(KC_UP),C(KC_RGHT),_______,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
@@ -151,8 +166,10 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 void render_layer_state(void) {
   switch (get_highest_layer(layer_state)) {
     case _QWERTY:
-      oled_write_ln_P(PSTR("Layer: Default"), false);
+      oled_write_ln_P(PSTR("Layer: Qwerty"), false);
       break;
+    case _HRMNY:
+      oled_write_ln_P(PSTR("Layer* Harmony"),false);
     case _NMB:
       oled_write_ln_P(PSTR("Layer: Number"), false);
       break;

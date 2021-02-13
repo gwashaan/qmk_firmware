@@ -16,11 +16,13 @@ enum custom_keycodes {
 };
 
 //Alias
-#define MT_MT LT(3,KC_TAB)    //hold:"META" tap:"tab"
-#define MT_EE LT(2,KC_ESC)   //hold:"EMACS" tap:"ESC"
-#define MT_NE LT(1,KC_ENT)     //hold:"NMB" tap:"Enter"
-#define MT_FK LT(4,KC_K)        //hold:"Function" tap:"k"
-#define MT_FD LT(4,KC_D)        //hold:"Function" tap:"D"
+#define MT_MT LT(4,KC_TAB)    //hold:"META" tap:"tab"
+#define MT_EE LT(3,KC_ESC)   //hold:"EMACS" tap:"ESC"
+#define MT_NE LT(2,KC_ENT)     //hold:"NMB" tap:"Enter"
+#define MT_FK LT(5,KC_K)        //hold:"Function" tap:"k"
+#define MT_FD LT(5,KC_D)        //hold:"Function" tap:"D"
+#define MT_FT LT(5,KC_T)        //hold:"Function" tap:"k"
+#define MT_FE LT(5,KC_E)        //hold:"Function" tap:"D"
 #define MT_SS LSFT_T(KC_SPC)      //hold:"Shift" tap:"Space"
 
 #define MC_PSC G(S(KC_S))         //Print screen
@@ -64,6 +66,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [1] = LAYOUT_split_3x6_3(
+  //,-----------------------------------------------------|   |------------------------------------------------------.
+       KC_ESC,    KC_Q,    KC_W,    KC_R,    KC_N,    KC_F,        KC_J,    KC_U,    KC_O,    KC_L,    KC_P, KC_MINS,
+  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
+        MO(3),    KC_K,    KC_S,   MT_FT,    KC_H,    KC_M,        KC_G,    KC_I,   MT_FE,    KC_A,    KC_Y, JP_QUOT,
+  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
+        MT_MT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_MINUS,    KC_D, KC_COMM,  KC_DOT, KC_SLSH,RCS_T(JP_PIPE),
+  //|--------+--------+--------+--------+--------+--------/   \--------+--------+--------+---------+--------+--------'
+                                 KC_LCTL, KC_MHEN,   MT_SS,       MT_NE, KC_HENK,  KC_RALT
+  //                           `--------+--------+--------'   `--------+--------+---------'
+  ),
+
+  [2] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------|   |-----------------------------------------------------.
        JP_GRV, KC_EXLM,   JP_AT, KC_HASH,  KC_DLR, KC_PERC,     JP_CIRC, JP_AMPR, JP_ASTR, JP_LPRN, JP_RPRN,  JP_EQL,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
@@ -75,7 +89,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //                           `--------+--------+--------'   `--------+--------+---------'
   ),
 
-  [2] = LAYOUT_split_3x6_3(
+  [3] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------|   |-----------------------------------------------------.
        MC_SRH, C(KC_A), C(KC_X),  KC_END, KC_PGDN, KC_PGUP,     C(KC_V),S(KC_TAB), KC_TAB,   INS_L,  MC_PSC,  KC_ESC,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
@@ -87,9 +101,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //                           `--------+--------+--------'   `--------+--------+--------'
   ),
 
-  [3] = LAYOUT_split_3x6_3(
+  [4] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------|   |-----------------------------------------------------.
-       SND_ID, _______,_______,C(KC_END),C(KC_PGUP),C(KC_PGUP), _______, _______,S(KC_TAB),_______, _______, _______,
+       SND_ID, _______,_______,C(KC_END),C(KC_PGUP),C(KC_PGUP), _______, _______,S(KC_TAB),DF(0),DF(1), _______,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
       _______,C(KC_HOME),_______,_______, C(KC_F), C(KC_H), C(KC_BSPC),C(KC_LEFT),C(KC_DOWN),C(KC_UP),C(KC_RGHT),_______,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
@@ -99,7 +113,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //                           `--------+--------+--------'   `--------+--------+--------'
   ),
 
-  [4] = LAYOUT_split_3x6_3(
+  [5] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------|   |-----------------------------------------------------.
       _______,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,     _______, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
@@ -111,7 +125,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //                           `--------+--------+--------'   `--------+--------+--------'
   ),
 
-  [5] = LAYOUT_split_3x6_3(
+  [6] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------|   |-----------------------------------------------------.
        KC_ESC, XXXXXXX, SEL_CUT,S(KC_END),XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
@@ -123,7 +137,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //                           `--------+--------+--------'   `--------+--------+--------'
   ),
 
-  [6] = LAYOUT_split_3x6_3(
+  [7] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
         RESET, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -145,17 +159,21 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 }
 
 #define L_BASE 0
-#define L_NMB 2
-#define L_EMACS 4
-#define L_META 8
-#define L_FN 16
-#define L_SCT 32
+#define L_HARMONY 2
+#define L_NMB 4
+#define L_EMACS 8
+#define L_META 16
+#define L_FN 32
+#define L_SCT 64
 
 void oled_render_layer_state(void) {
     oled_write_P(PSTR("Layer: "), false);
     switch (layer_state) {
         case L_BASE:
-            oled_write_ln_P(PSTR("Default"), false);
+            oled_write_ln_P(PSTR("QWERTY"), false);
+            break;
+        case L_HARMONY:
+            oled_write_ln_P(PSTR("Harmony"), false);
             break;
         case L_NMB:
             oled_write_ln_P(PSTR("Number"), false);
@@ -279,7 +297,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case SEL_DEL:
       if(record->event.pressed){
         SEND_STRING(SS_TAP(X_DEL));
-        layer_move(2);
+        layer_move(3);
       }
       return false;
       break;
@@ -287,7 +305,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case SEL_CPY:
       if(record->event.pressed){
         SEND_STRING(SS_LCTL("c") );
-        layer_move(2);
+        layer_move(3);
       }
       return false;
       break;
@@ -295,7 +313,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case SEL_CUT:
       if(record->event.pressed){
         SEND_STRING(SS_LCTL("x"));
-        layer_move(2);
+        layer_move(3);
       }
       return false;
       break;
@@ -303,7 +321,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case SEL_FIND:
       if(record->event.pressed){
         SEND_STRING(SS_LCTL("f"));
-        layer_move(2);
+        layer_move(3);
       }
       return false;
       break;
@@ -311,7 +329,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case SEL_REP:
       if(record->event.pressed){
         SEND_STRING(SS_LCTL("h"));
-        layer_move(2);
+        layer_move(3);
       }
       return false;
       break;

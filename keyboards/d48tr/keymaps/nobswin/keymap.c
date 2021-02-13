@@ -11,7 +11,8 @@ extern keymap_config_t keymap_config;
 // Layer names don't all need to be of the same length, obviously, and you can also skip them
 // entirely and just use numbers.
 enum layer_number {
-    _QWERTY = 0,
+    _HRMNY = 0,
+    _QWERTY,
     _NMB,
     _EMACS,
     _META,
@@ -40,6 +41,8 @@ enum custom_keycodes {
 #define MT_MT LT(_META,KC_TAB)    //hold:"META" tap:"tab"
 #define MT_EE LT(_EMACS,KC_ESC)   //hold:"EMACS" tap:"ESC"
 #define MT_NE LT(_NMB,KC_ENT)     //hold:"NMB" tap:"Enter"
+#define MT_FT LT(_FN,KC_T)        //hold:"Function" tap:"T"
+#define MT_FE LT(_FN,KC_E)        //hold:"Function" tap:"E"
 #define MT_FK LT(_FN,KC_K)        //hold:"Function" tap:"k"
 #define MT_FD LT(_FN,KC_D)        //hold:"Function" tap:"D"
 #define MT_SS LSFT_T(KC_SPC)      //hold:"Shift" tap:"Space"
@@ -74,6 +77,18 @@ enum custom_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
+ [_HRMNY] = KEYMAP(
+  //,-----------------------------------------------------|   |------------------------------------------------------.
+       KC_ESC,    KC_Q,    KC_W,    KC_R,    KC_N,    KC_F,        KC_J,    KC_U,    KC_O,    KC_L,    KC_P, JP_QUOT,
+  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
+   MO(_EMACS),    KC_K,    KC_S,   MT_FT,    KC_H,   KC_M,         KC_G,    KC_I,   MT_FE,    KC_A,    KC_Y, KC_SCLN,
+  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
+        MT_MT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,     KC_MINS,    KC_D, KC_COMM,  KC_DOT, KC_SLSH, RCS_T(JP_PIPE),
+  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
+      KC_LGUI, KC_LALT, KC_LCTL, KC_MHEN,   MT_SS, XXXXXXX,     XXXXXXX,   MT_NE, KC_HENK, KC_RALT, KC_RGUI, KC_RSFT
+  //|-----------------------------------------------------|   |-----------------------------------------------------'
+  ),
+
  [_QWERTY] = KEYMAP(
   //,-----------------------------------------------------|   |------------------------------------------------------.
        KC_ESC,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,        KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, KC_MINS,
@@ -85,6 +100,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_LGUI, KC_LALT, KC_LCTL, KC_MHEN,   MT_SS, XXXXXXX,     XXXXXXX,   MT_NE, KC_HENK, KC_RALT, KC_RGUI, KC_RSFT
   //|-----------------------------------------------------|   |-----------------------------------------------------'
   ),
+
 
 [_NMB] = KEYMAP(
   //,-----------------------------------------------------|   |-----------------------------------------------------.
@@ -112,7 +128,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_META] = KEYMAP(
   //,-----------------------------------------------------|   |-----------------------------------------------------.
-      SND_ID,_______,_______,C(KC_END),C(KC_PGDN),C(KC_PGUP),     C(KC_V), XXXXXXX,S(KC_TAB),_______, XXXXXXX, _______,
+      SND_ID,_______,_______,C(KC_END),C(KC_PGDN),C(KC_PGUP),   C(KC_V), _______,S(KC_TAB),DF(_QWERTY),DF(_HRMNY),_______,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
     _______,C(KC_HOME),_______,C(KC_DEL), C(KC_F),C(KC_H), C(KC_BSPC),C(KC_LEFT),C(KC_DOWN),C(KC_UP),C(KC_RGHT),_______,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|

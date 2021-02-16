@@ -1,37 +1,37 @@
-
 #include QMK_KEYBOARD_H
+
 //Declare custum keyCodes
 enum custom_keycodes {
-    QT_SCT = SAFE_RANGE,        //Quit Select
-    INS_L,                      //Insert Line
+    INS_L = SAFE_RANGE,         //Insert Line
     KILL_L,                     //Kill Line
-    SEL_CPY,                    //Selection Copy
-    SEL_CUT,                    //Selection Cut
-    SEL_DEL,                    //Selection Delete
-    SEL_FIND,                   //Selection Find
-    SEL_REP,                    //Selection Replace
     SND_ID,                     //Send ID
     RST_MOD,                    //Reset Modefier Key
-    SFT_SPC,                    //SHIFT & Space
+    IME_ON,                     //IME ON
+    IME_OFF,                    //IME OFF
+    REPORT_PARAM,               //Report Parameter
+    INC_PARAM,                  //Increase Typing Term
+    DEC_PARAM,                  //Decrease Typing Term
 };
+
+//
+#include "romaji.c"
 
 //Alias
 #define MT_MT LT(4,KC_TAB)    //hold:"META" tap:"tab"
-#define MT_EE LT(3,KC_ESC)   //hold:"EMACS" tap:"ESC"
+#define MT_SS LSFT_T(KC_SPC)      //hold:"Shift" tap:"Space"
 #define MT_NE LT(2,KC_ENT)     //hold:"NMB" tap:"Enter"
 #define MT_FK LT(5,KC_K)        //hold:"Function" tap:"k"
 #define MT_FD LT(5,KC_D)        //hold:"Function" tap:"D"
 #define MT_FT LT(5,KC_T)        //hold:"Function" tap:"k"
 #define MT_FE LT(5,KC_E)        //hold:"Function" tap:"D"
-#define MT_SS LSFT_T(KC_SPC)      //hold:"Shift" tap:"Space"
 
-#define MC_PSC G(S(KC_S))         //Print screen
-#define MC_DTR G(C(KC_RIGHT))     //Desk top move right
-#define MC_DTL G(C(KC_LEFT))      //Desk top move left
-#define MC_LCK G(KC_L)            //Screen Lock
-#define MC_MIN G(KC_M)            //Window Minimize
-#define MC_SRH G(KC_S)            //Search
-#define MC_MAX G(KC_UP)           //Window Maxmize
+#define MC_PSC  LGUI(S(KC_S))         //Print screen
+#define MC_DTR  LGUI(C(KC_RIGHT))     //Desk top move right
+#define MC_DTL  LGUI(C(KC_LEFT))      //Desk top move left
+#define MC_LCK  LGUI(KC_L)            //Screen Lock
+#define MC_MIN  LGUI(KC_M)            //Window Minimize
+#define MC_SRH  LGUI(KC_S)            //Search
+#define MC_MAX  LGUI(KC_UP)           //Window Maxmize
 
 #define JP_AT KC_LBRC             // @
 #define JP_CIRC KC_EQL            // ^, ~
@@ -50,7 +50,7 @@ enum custom_keycodes {
 #define JP_ASTR LSFT(JP_COLN)     // *
 #define JP_GRV LSFT(JP_AT)        //`
 #define JP_PIPE LSFT(KC_INT3)     //|
-#define JP_TILD LSFT(KC_EQL)      //~
+
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_split_3x6_3(
@@ -67,11 +67,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [1] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------|   |------------------------------------------------------.
-       KC_ESC,    KC_Q,    KC_W,    KC_R,    KC_N,    KC_F,        KC_J,    KC_U,    KC_O,    KC_L,    KC_P, KC_MINS,
+       KC_ESC,    KC_Q,    KC_W,    KC_H,    KC_R,    KC_F,        KC_J,    KC_U,    KC_O,    KC_L,    KC_P, JP_QUOT,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-        MO(3),    KC_K,    KC_S,   MT_FT,    KC_H,    KC_M,        KC_G,    KC_I,   MT_FE,    KC_A,    KC_Y, JP_QUOT,
+        MO(3),    KC_K,    KC_S,   MT_FT,    KC_N,    KC_M,        KC_G,    KC_I,   MT_FE,    KC_A,    KC_Y, KC_SCLN,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-        MT_MT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_MINUS,    KC_D, KC_COMM,  KC_DOT, KC_SLSH,RCS_T(JP_PIPE),
+        MT_MT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,     KC_MINS,    KC_D, KC_COMM,  KC_DOT, KC_SLSH,RCS_T(JP_PIPE),
   //|--------+--------+--------+--------+--------+--------/   \--------+--------+--------+---------+--------+--------'
                                  KC_LCTL, KC_MHEN,   MT_SS,       MT_NE, KC_HENK,  KC_RALT
   //                           `--------+--------+--------'   `--------+--------+---------'
@@ -97,17 +97,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
       _______,  MC_MAX, C(KC_Y), C(KC_C),  MC_DTL,  MC_DTR,  KC_MS_BTN3, KC_ENT,S(KC_LEFT),S(KC_RGHT),C(KC_Z),MC_MIN,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-                                 RST_MOD,   TG(5), _______,     _______, _______, _______
+                                 RST_MOD, _______, _______,     _______, _______, _______
   //                           `--------+--------+--------'   `--------+--------+--------'
   ),
 
   [4] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------|   |-----------------------------------------------------.
-       SND_ID, _______,_______,C(KC_END),C(KC_PGUP),C(KC_PGUP), _______, _______,S(KC_TAB),DF(0),DF(1), _______,
+       SND_ID, DF(0),DF(1),C(KC_END),C(KC_PGUP),C(KC_PGUP),     RGB_TOG, RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, _______,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-      _______,C(KC_HOME),_______,_______, C(KC_F), C(KC_H), C(KC_BSPC),C(KC_LEFT),C(KC_DOWN),C(KC_UP),C(KC_RGHT),_______,
+      _______,C(KC_HOME),_______,C(KC_DEL), C(KC_F), C(KC_H), C(KC_BSPC),C(KC_LEFT),C(KC_DOWN),C(KC_UP),C(KC_RGHT),_______,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-      _______,  MC_LCK, _______, _______,  MC_DTL,  MC_DTR,  KC_MS_BTN3,  KC_ENT, _______, _______, C(KC_Z), _______,
+      _______,  MC_LCK, _______, _______,  MC_DTL,  MC_DTR,  INC_PARAM,DEC_PARAM,REPORT_PARAM, _______, C(KC_Z),  MC_MIN,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
                                  RST_MOD, _______, _______,     _______, _______, _______
   //                           `--------+--------+--------'   `--------+--------+--------'
@@ -115,39 +115,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [5] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------|   |-----------------------------------------------------.
-      _______,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,     _______, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______,
+      RGB_TOG,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,     _______, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, RGB_TOG,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
       _______,   KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,  A(KC_LEFT), KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R,A(KC_RIGHT),
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
       _______,  KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,   _______,KC_MS_BTN1,KC_MS_BTN3,KC_MS_BTN2,_______,_______,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-                                 RST_MOD, _______, _______,       MO(1), _______, _______
+                                 RST_MOD, _______, _______,     _______, _______, _______
   //                           `--------+--------+--------'   `--------+--------+--------'
   ),
 
-  [6] = LAYOUT_split_3x6_3(
-  //,-----------------------------------------------------|   |-----------------------------------------------------.
-       KC_ESC, XXXXXXX, SEL_CUT,S(KC_END),XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-       TO(2),S(KC_HOME),XXXXXXX, SEL_DEL,SEL_FIND, SEL_REP,   SEL_DEL,S(KC_LEFT),S(KC_DOWN),S(KC_UP),S(KC_RGHT),XXXXXXX,
-  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-        MO(3), C(KC_Z), XXXXXXX, SEL_CPY, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-                                 RST_MOD,   MO(2), _______,       MO(1), _______, _______
-  //                           `--------+--------+--------'   `--------+--------+--------'
-  ),
-
-  [7] = LAYOUT_split_3x6_3(
-  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-        RESET, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          KC_LGUI, _______,  KC_SPC,     KC_ENT, _______, KC_RALT
-                                      //`--------------------------'  `--------------------------'
-  )
 };
 
 #ifdef OLED_DRIVER_ENABLE
@@ -272,6 +249,30 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
 
   switch (keycode) {
+    case IME_OFF:
+      if(record->event.pressed){
+        romaji_reset();
+        _romaji_mode = false;
+        register_code(KC_LANG2);
+        register_code(KC_MHEN);
+      }else{
+        unregister_code(KC_LANG2);
+        unregister_code(KC_MHEN);
+      }
+      return false;
+
+    case IME_ON:
+      if(record->event.pressed){
+        romaji_reset();
+        _romaji_mode = true;
+        register_code(KC_LANG1);
+        register_code(KC_HENK);
+      }else{
+        unregister_code(KC_LANG1);
+        unregister_code(KC_HENK);
+      }
+      return false;
+
     case MT_SS:
       if(record->event.pressed){
         SHIFT_PRESSED = true;
@@ -290,46 +291,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case INS_L:
       if(record->event.pressed){
         SEND_STRING(SS_TAP(X_HOME) SS_TAP(X_ENT));
-      }
-      return false;
-      break;
-
-    case SEL_DEL:
-      if(record->event.pressed){
-        SEND_STRING(SS_TAP(X_DEL));
-        layer_move(3);
-      }
-      return false;
-      break;
-
-    case SEL_CPY:
-      if(record->event.pressed){
-        SEND_STRING(SS_LCTL("c") );
-        layer_move(3);
-      }
-      return false;
-      break;
-
-    case SEL_CUT:
-      if(record->event.pressed){
-        SEND_STRING(SS_LCTL("x"));
-        layer_move(3);
-      }
-      return false;
-      break;
-
-    case SEL_FIND:
-      if(record->event.pressed){
-        SEND_STRING(SS_LCTL("f"));
-        layer_move(3);
-      }
-      return false;
-      break;
-
-    case SEL_REP:
-      if(record->event.pressed){
-        SEND_STRING(SS_LCTL("h"));
-        layer_move(3);
       }
       return false;
       break;

@@ -14,41 +14,41 @@ enum layer_number {
     _EMACS,
     _META,
     _FN,
-    _SCT,
+
 };
 
 //Declare custum keyCodes
 enum custom_keycodes {
-    QT_SCT = SAFE_RANGE,        //Quit Select
-    INS_L,                      //Insert Line
+    INS_L = SAFE_RANGE,         //Insert Line
     KILL_L,                     //Kill Line
-    SEL_CPY,                    //Selection Copy
-    SEL_CUT,                    //Selection Cut
-    SEL_DEL,                    //Selection Delete
-    SEL_FIND,                   //Selection Find
-    SEL_REP,                    //Selection Replace
     SND_ID,                     //Send ID
     RST_MOD,                    //Reset Modefier Key
-    SFT_SPC,                    //SHIFT & Space
+    IME_ON,                       //EISU MODE
+    IME_OFF,                     //ROMAJI MODE
+    REPORT_PARAM,               //REPORT PARAMETER
+    INC_PARAM,                  //Increase Typing Term
+    DEC_PARAM,                  //Decrease Typing Term
 };
+
+//
+#include "romaji.c"
 
 //Alias
 #define MT_MT LT(_META,KC_TAB)    //hold:"META" tap:"tab"
-#define MT_EE LT(_EMACS,KC_ESC)   //hold:"EMACS" tap:"ESC"
+#define MT_SS LSFT_T(KC_SPC)      //hold:"Shift" tap:"Space"
 #define MT_NE LT(_NMB,KC_ENT)     //hold:"NMB" tap:"Enter"
 #define MT_FK LT(_FN,KC_K)        //hold:"Function" tap:"k"
 #define MT_FD LT(_FN,KC_D)        //hold:"Function" tap:"D"
 #define MT_FT LT(_FN,KC_T)        //hold:"Function" tap:"T"
 #define MT_FE LT(_FN,KC_E)        //hold:"Function" tap:"E"
-#define MT_SS LSFT_T(KC_SPC)      //hold:"Shift" tap:"Space"
 
-#define MC_PSC G(S(KC_S))         //Print screen
-#define MC_DTR G(C(KC_RIGHT))     //Desk top move right
-#define MC_DTL G(C(KC_LEFT))      //Desk top move left
-#define MC_LCK G(KC_L)            //Screen Lock
-#define MC_MIN G(KC_M)            //Window Minimize
-#define MC_SRH G(KC_S)            //Search
-#define MC_MAX G(KC_UP)           //Window Maxmize
+#define MC_PSC LGUI(S(KC_S))         //Print screen
+#define MC_DTR LGUI(C(KC_RIGHT))     //Desk top move right
+#define MC_DTL LGUI(C(KC_LEFT))      //Desk top move left
+#define MC_LCK LGUI(KC_L)            //Screen Lock
+#define MC_MIN LGUI(KC_M)            //Window Minimize
+#define MC_SRH LGUI(KC_S)            //Search
+#define MC_MAX LGUI(KC_UP)           //Window Maxmize
 
 #define JP_AT KC_LBRC             // @
 #define JP_CIRC KC_EQL            // ^, ~
@@ -67,7 +67,7 @@ enum custom_keycodes {
 #define JP_ASTR LSFT(JP_COLN)     // *
 #define JP_GRV LSFT(JP_AT)        //`
 #define JP_PIPE LSFT(KC_INT3)     //|
-#define JP_TILD LSFT(KC_EQL)      //~
+
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -79,15 +79,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
         MT_MT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,        KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,RCS_T(JP_PIPE),
   //|--------+--------+--------+--------+--------+--------/   \--------+--------+--------+---------+--------+--------'
-                        KC_LCTL, KC_MHEN,   MT_SS, KC_LGUI,     KC_RGUI,   MT_NE, KC_HENK,  KC_RALT
+                        KC_LCTL, IME_OFF,   MT_SS, KC_LGUI,     KC_RGUI,   MT_NE, IME_ON,  KC_RALT
   //                  `--------+--------+--------+--------'   `--------+--------+--------+---------'
   ),
 
   [_HRMNY] = LAYOUT( \
   //,-----------------------------------------------------|   |------------------------------------------------------.
-       KC_ESC,    KC_Q,    KC_W,    KC_R,    KC_N,    KC_F,        KC_J,    KC_U,    KC_O,    KC_L,    KC_P, KC_MINS,
+       KC_ESC,    KC_Q,    KC_W,    KC_H,    KC_R,    KC_F,        KC_J,    KC_U,    KC_O,    KC_L,    KC_P, JP_QUOT,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-   MO(_EMACS),    KC_K,    KC_S,   MT_FT,    KC_H,    KC_M,        KC_G,    KC_I,   MT_FE,    KC_A,    KC_Y, JP_QUOT,
+   MO(_EMACS),    KC_K,    KC_S,   MT_FT,    KC_N,    KC_M,        KC_G,    KC_I,   MT_FE,    KC_A,    KC_Y, KC_SCLN,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
         MT_MT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,     KC_MINS,    KC_D, KC_COMM,  KC_DOT, KC_SLSH,RCS_T(JP_PIPE),
   //|--------+--------+--------+--------+--------+--------/   \--------+--------+--------+---------+--------+--------'
@@ -99,7 +99,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------|   |-----------------------------------------------------.
        JP_GRV, KC_EXLM,   JP_AT, KC_HASH,  KC_DLR, KC_PERC,     JP_CIRC, JP_AMPR, JP_ASTR, JP_LPRN, JP_RPRN,  JP_EQL,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-      _______,   KC_1,    KC_2,    KC_3,    KC_4,    KC_5,        KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  JP_PLUS,
+      _______,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,        KC_6,    KC_7,    KC_8,    KC_9,    KC_0, JP_PLUS,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
       _______, JP_UNDS, KC_MINS, JP_LPRN, JP_LCBR, JP_LBRC,     JP_RBRC, JP_RCBR, JP_RPRN,  KC_DOT, KC_JYEN, KC_MINS,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
@@ -115,17 +115,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
       _______,  MC_MAX, C(KC_Y), C(KC_C),  MC_DTL,  MC_DTR, KC_MS_BTN3,KC_ENT,S(KC_LEFT),S(KC_RGHT),C(KC_Z),  MC_MIN,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-                        RST_MOD,TG(_SCT), _______, _______,     _______, _______, _______, _______
+                        RST_MOD, _______, _______, _______,     _______, _______, _______, _______
   //                  `--------+--------+--------+--------'   `--------+--------+--------+--------'
   ),
 
   [_META] = LAYOUT( \
   //,-----------------------------------------------------|   |-----------------------------------------------------.
-       SND_ID,_______,_______,C(KC_END),C(KC_PGDN),C(KC_PGUP),  _______, _______,S(KC_TAB),DF(_QWERTY),DF(_HRMNY), _______,
+    SND_ID,DF(_QWERTY),DF(_HRMNY),C(KC_END),C(KC_PGDN),C(KC_PGUP),RGB_TOG,RGB_MOD,RGB_HUI, RGB_SAI, RGB_VAI, _______,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-      _______,C(KC_HOME),_______,C(KC_DEL),C(KC_F),C(KC_H), C(KC_BSPC),C(KC_LEFT),C(KC_DOWN),C(KC_UP),C(KC_RGHT),_______,
+    _______,C(KC_HOME),_______,C(KC_DEL),C(KC_F),C(KC_H), C(KC_BSPC),C(KC_LEFT),C(KC_DOWN),C(KC_UP),C(KC_RGHT),_______,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-      _______,  MC_LCK, _______, _______,  MC_DTL,  MC_DTR,  KC_MS_BTN3,  KC_ENT, _______, _______, C(KC_Z), _______,
+      _______,  MC_LCK, _______, _______,  MC_DTL,  MC_DTR,  INC_PARAM,DEC_PARAM,REPORT_PARAM,_______,C(KC_Z),MC_MIN,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
                         RST_MOD, _______, _______, _______,     _______, _______, _______, _______
   //                  `--------+--------+--------+--------'   `--------+--------+--------+--------'
@@ -139,19 +139,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
     MO(_META),  KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,   _______,KC_MS_BTN1,KC_MS_BTN3,KC_MS_BTN2,_______,_______,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-                        RST_MOD, _______, _______, _______,     _______,MO(_NMB), _______, _______
-  //                  `--------+--------+--------+--------'   `--------+--------+--------+--------'
-  ),
-
-    [_SCT] = LAYOUT( \
-  //,-----------------------------------------------------|   |-----------------------------------------------------.
-       KC_ESC, XXXXXXX, SEL_CUT,S(KC_END),XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-   TO(_EMACS),S(KC_HOME),XXXXXXX,SEL_DEL,SEL_FIND, SEL_REP,   SEL_DEL,S(KC_LEFT),S(KC_DOWN),S(KC_UP),S(KC_RGHT),XXXXXXX,
-  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-    MO(_META), C(KC_Z), XXXXXXX, SEL_CPY, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-                        RST_MOD,MO(_EMACS),_______,_______,     _______,MO(_NMB), _______, _______
+                        RST_MOD, _______, _______, _______,     _______, _______, _______, _______
   //                  `--------+--------+--------+--------'   `--------+--------+--------+--------'
   ),
 };
@@ -169,7 +157,8 @@ void render_layer_state(void) {
       oled_write_ln_P(PSTR("Layer: Qwerty"), false);
       break;
     case _HRMNY:
-      oled_write_ln_P(PSTR("Layer* Harmony"),false);
+      oled_write_ln_P(PSTR("Layer: Harmony"),false);
+      break;
     case _NMB:
       oled_write_ln_P(PSTR("Layer: Number"), false);
       break;
@@ -182,20 +171,16 @@ void render_layer_state(void) {
     case _FN:
       oled_write_ln_P(PSTR("Layer: Function"),false);
       break;
-    case _SCT:
-      oled_write_ln_P(PSTR("Layer: Select"),false);
-      break;
-
     default:
       oled_write_ln_P(PSTR("Layer: Undefined"), false);
     }
 }
-
+/*
 void render_logo(void) {
     static const char PROGMEM logo[] = {0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87, 0x88, 0x89, 0x8a, 0x8b, 0x8c, 0x8d, 0x8e, 0x8f, 0x90, 0x91, 0x92, 0x93, 0x94, 0xa0, 0xa1, 0xa2, 0xa3, 0xa4, 0xa5, 0xa6, 0xa7, 0xa8, 0xa9, 0xaa, 0xab, 0xac, 0xad, 0xae, 0xaf, 0xb0, 0xb1, 0xb2, 0xb3, 0xb4, 0xc0, 0xc1, 0xc2, 0xc3, 0xc4, 0xc5, 0xc6, 0xc7, 0xc8, 0xc9, 0xca, 0xcb, 0xcc, 0xcd, 0xce, 0xcf, 0xd0, 0xd1, 0xd2, 0xd3, 0xd4, 0};
     oled_write_P(logo, false);
 }
-
+*/
 char keylog_str[24]  = {};
 char keylogs_str[21] = {};
 int  keylogs_str_idx = 0;
@@ -232,7 +217,7 @@ void oled_task_user(void) {
         oled_write_ln(read_keylog(), false);
         oled_write_ln(read_keylogs(), false);
     } else {
-        render_logo();
+        //render_logo();
     }
 }
 #endif
@@ -243,21 +228,48 @@ static bool EXCEPTIONALY_SHIFT_PRESSED = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
-#ifdef OLED_DRIVER_ENABLE
-    set_keylog(keycode, record);
-#endif
+    #ifdef OLED_DRIVER_ENABLE
+        set_keylog(keycode, record);
+    #endif
   }
 
+  if(! process_romaji(keycode,record))
+    return false;
+
   switch (keycode) {
+    case IME_OFF:
+      if(record->event.pressed){
+        romaji_reset();
+        _romaji_mode = false;
+        register_code(KC_LANG2);
+        register_code(KC_MHEN);
+      }else{
+        unregister_code(KC_LANG2);
+        unregister_code(KC_MHEN);
+      }
+      return false;
+
+    case IME_ON:
+      if(record->event.pressed){
+        romaji_reset();
+        _romaji_mode = true;
+        register_code(KC_LANG1);
+        register_code(KC_HENK);
+      }else{
+        unregister_code(KC_LANG1);
+        unregister_code(KC_HENK);
+      }
+      return false;
+
     case MT_SS:
       if(record->event.pressed){
         SHIFT_PRESSED = true;
       }else{
         SHIFT_PRESSED = false;
       }
-      break;
+    break;
 
-    case KILL_L:
+        case KILL_L:
       if(record->event.pressed){
         SEND_STRING(SS_DOWN(X_LSFT) SS_TAP(X_END) SS_UP(X_LSFT) SS_TAP(X_DEL));
       }
@@ -267,46 +279,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case INS_L:
       if(record->event.pressed){
         SEND_STRING(SS_TAP(X_HOME) SS_TAP(X_ENT));
-      }
-      return false;
-      break;
-
-    case SEL_DEL:
-      if(record->event.pressed){
-        SEND_STRING(SS_TAP(X_DEL));
-        layer_move(_EMACS);
-      }
-      return false;
-      break;
-
-    case SEL_CPY:
-      if(record->event.pressed){
-        SEND_STRING(SS_LCTL("c") );
-        layer_move(_EMACS);
-      }
-      return false;
-      break;
-
-    case SEL_CUT:
-      if(record->event.pressed){
-        SEND_STRING(SS_LCTL("x"));
-        layer_move(_EMACS);
-      }
-      return false;
-      break;
-
-    case SEL_FIND:
-      if(record->event.pressed){
-        SEND_STRING(SS_LCTL("f"));
-        layer_move(_EMACS);
-      }
-      return false;
-      break;
-
-    case SEL_REP:
-      if(record->event.pressed){
-        SEND_STRING(SS_LCTL("h"));
-        layer_move(_EMACS);
       }
       return false;
       break;

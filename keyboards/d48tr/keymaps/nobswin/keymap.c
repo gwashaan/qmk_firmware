@@ -1,7 +1,7 @@
 #include "d48tr.h"
-#include "action_layer.h"
-#include "eeconfig.h"
-#include <print.h>
+//#include "action_layer.h"
+//#include "eeconfig.h"
+//#include <print.h>
 #include "trackball.c"
 
 extern keymap_config_t keymap_config;
@@ -17,35 +17,26 @@ enum layer_number {
     _EMACS,
     _META,
     _FN,
-    _SCT,
 };
 
 //Declare custum keyCodes
 enum custom_keycodes {
-    QT_SCT = SAFE_RANGE,        //Quit Select
-    INS_L,                      //Insert Line
+    INS_L = SAFE_RANGE,         //Insert Line
     KILL_L,                     //Kill Line
-    SEL_CPY,                    //Selection Copy
-    SEL_CUT,                    //Selection Cut
-    SEL_DEL,                    //Selection Delete
-    SEL_FIND,                   //Selection Find
-    SEL_REP,                    //Selection Replace
     SND_ID,                     //Send ID
     RST_MOD,                    //Reset Modefier Key
-    SFT_SPC,                    //SHIFT & Space
     MS_L,                       //MS_BOTTON1
     MS_R,                       //MS_BOTTON2
 };
 
 //Alias
 #define MT_MT LT(_META,KC_TAB)    //hold:"META" tap:"tab"
-#define MT_EE LT(_EMACS,KC_ESC)   //hold:"EMACS" tap:"ESC"
+#define MT_SS LSFT_T(KC_SPC)      //hold:"Shift" tap:"Space"
 #define MT_NE LT(_NMB,KC_ENT)     //hold:"NMB" tap:"Enter"
 #define MT_FT LT(_FN,KC_T)        //hold:"Function" tap:"T"
 #define MT_FE LT(_FN,KC_E)        //hold:"Function" tap:"E"
 #define MT_FK LT(_FN,KC_K)        //hold:"Function" tap:"k"
 #define MT_FD LT(_FN,KC_D)        //hold:"Function" tap:"D"
-#define MT_SS LSFT_T(KC_SPC)      //hold:"Shift" tap:"Space"
 
 #define MC_PSC G(S(KC_S))         //Print screen
 #define MC_DTR G(C(KC_RIGHT))     //Desk top move right
@@ -72,8 +63,6 @@ enum custom_keycodes {
 #define JP_ASTR LSFT(JP_COLN)     // *
 #define JP_GRV LSFT(JP_AT)        //`
 #define JP_PIPE LSFT(KC_INT3)     //|
-#define JP_TILD LSFT(KC_EQL)      //~
-
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -108,7 +97,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
       _______,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,        KC_6,    KC_7,    KC_8,    KC_9,    KC_0, JP_PLUS,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-      _______, JP_UNDS, KC_MINS, JP_LPRN, JP_LCBR, JP_LBRC,     JP_RBRC, JP_LCBR, JP_RPRN,  KC_DOT, KC_MINS, KC_JYEN,
+      _______, JP_UNDS, KC_MINS, JP_LPRN, JP_LCBR, JP_LBRC,     JP_RBRC, JP_LCBR, JP_RPRN,  KC_DOT, KC_JYEN, KC_MINS,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
       _______, _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______, _______
   //|-----------------------------------------------------|   |-----------------------------------------------------'
@@ -116,13 +105,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_EMACS] = KEYMAP(
   //,-----------------------------------------------------|   |-----------------------------------------------------.
-       MC_SRH, C(KC_A), C(KC_X),  KC_END, KC_PGDN, KC_PGUP,     C(KC_V), S(KC_TAB),  KC_TAB,   INS_L,  MC_PSC,  KC_ESC,
+       MC_SRH, C(KC_A), C(KC_X),  KC_END, KC_PGDN, KC_PGUP,     C(KC_V),S(KC_TAB), KC_TAB,   INS_L,  MC_PSC,  KC_ESC,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
       _______, KC_HOME,  KILL_L,  KC_DEL, C(KC_F), C(KC_H),     KC_BSPC, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT,   KC_F2,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
       _______,  MC_MAX, C(KC_Y), C(KC_C),  MC_DTL,  MC_DTR,  KC_MS_BTN3,KC_ENT,S(KC_LEFT),S(KC_RGHT),C(KC_Z), MC_MIN,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-      _______, _______, _______,TG(_SCT), _______, _______,     _______, _______, _______, _______, _______, _______
+      _______, _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______, _______
   //|-----------------------------------------------------|   |-----------------------------------------------------'
   ),
 
@@ -146,19 +135,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
     MO(_META),  KC_F11,  KC_F12,  KC_F13,  KC_F14,  KC_F15,     _______,    MS_L,KC_MS_BTN3,  MS_R, _______, _______,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-      RST_MOD, _______, _______, _______, _______, _______,     _______, MO(_NMB),_______, _______, _______, RST_MOD
-  //|-----------------------------------------------------|   |-----------------------------------------------------'
-  ),
-
-   [_SCT] = KEYMAP(
-  //,-----------------------------------------------------|   |-----------------------------------------------------.
-       KC_ESC, XXXXXXX, SEL_CUT,S(KC_END),XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-   TO(_EMACS),S(KC_HOME),XXXXXXX,SEL_DEL,SEL_FIND,SEL_REP,   SEL_DEL,S(KC_LEFT),S(KC_DOWN),S(KC_UP),S(KC_RGHT),XXXXXXX,
-  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-    MO(_META), C(KC_Z), XXXXXXX, SEL_CPY, XXXXXXX, XXXXXXX,     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-      _______, _______, _______,MO(_EMACS), _______, _______,     _______, _______, _______, _______, _______, _______
+      RST_MOD, _______, _______, _______, _______, _______,     _______, _______,_______, _______, _______, RST_MOD
   //|-----------------------------------------------------|   |-----------------------------------------------------'
   ),
 };
@@ -187,46 +164,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case INS_L:
       if(record->event.pressed){
         SEND_STRING(SS_TAP(X_HOME) SS_TAP(X_ENT));
-      }
-      return false;
-      break;
-
-    case SEL_DEL:
-      if(record->event.pressed){
-        SEND_STRING(SS_TAP(X_DEL));
-        layer_move(_EMACS);
-      }
-      return false;
-      break;
-
-    case SEL_CPY:
-      if(record->event.pressed){
-        SEND_STRING(SS_LCTL("c") );
-        layer_move(_EMACS);
-      }
-      return false;
-      break;
-
-    case SEL_CUT:
-      if(record->event.pressed){
-        SEND_STRING(SS_LCTL("x"));
-        layer_move(_EMACS);
-      }
-      return false;
-      break;
-
-    case SEL_FIND:
-      if(record->event.pressed){
-        SEND_STRING(SS_LCTL("f"));
-        layer_move(_EMACS);
-      }
-      return false;
-      break;
-
-    case SEL_REP:
-      if(record->event.pressed){
-        SEND_STRING(SS_LCTL("h"));
-        layer_move(_EMACS);
       }
       return false;
       break;

@@ -67,11 +67,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [1] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------|   |------------------------------------------------------.
-       KC_ESC,    KC_Q,    KC_W,    KC_D,    KC_R,    KC_F,        KC_J,    KC_U,    KC_I,    KC_O,    KC_P, JP_QUOT,
+       KC_ESC,    KC_Q,    KC_W,    KC_D,    KC_R,    KC_G,        KC_J,    KC_U,    KC_I,    KC_V,    KC_P, JP_QUOT,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-        MO(3),    KC_K,    KC_S,   MT_FT,    KC_H,    KC_M,        KC_L,    KC_A,   MT_FE,    KC_N,    KC_Y, KC_SCLN,
+        MO(3),    KC_K,    KC_S,   MT_FT,    KC_N,    KC_M,        KC_L,    KC_A,   MT_FE,    KC_O,    KC_Y, KC_SCLN,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-        MT_MT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,     KC_MINS,    KC_G, KC_COMM,  KC_DOT, KC_SLSH,RCS_T(JP_PIPE),
+        MT_MT,    KC_Z,    KC_X,    KC_C,    KC_H,    KC_B,     KC_MINS,    KC_F, KC_COMM,  KC_DOT, KC_SLSH,RCS_T(JP_PIPE),
   //|--------+--------+--------+--------+--------+--------/   \--------+--------+--------+---------+--------+--------'
                                  KC_LCTL, KC_MHEN,   MT_SS,       MT_NE, KC_HENK,  KC_RALT
   //                           `--------+--------+--------'   `--------+--------+---------'

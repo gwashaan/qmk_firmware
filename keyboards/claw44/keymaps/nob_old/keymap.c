@@ -8,22 +8,30 @@
 
 //Declare layers
 enum layer_number {
-  _NOBIX = 0,
-  _NMB,
-  _EMACS,
-  _META,
-  _FN,
+    _QWERTY = 0,
+    _HRMNY,
+    _NMB,
+    _EMACS,
+    _META,
+    _FN,
+
 };
 
 //Declare custum keyCodes
 enum custom_keycodes {
-  INS_L = SAFE_RANGE,         //Insert Line
-  KILL_L,                     //Kill Line
-  SND_ID,                     //Send ID
-  RST_MOD,                    //Reset Modefier Key
-  IME_ON,                       //EISU MODE
-  IME_OFF,                     //ROMAJI MODE
+    INS_L = SAFE_RANGE,         //Insert Line
+    KILL_L,                     //Kill Line
+    SND_ID,                     //Send ID
+    RST_MOD,                    //Reset Modefier Key
+    IME_ON,                       //EISU MODE
+    IME_OFF,                     //ROMAJI MODE
+    REPORT_PARAM,               //REPORT PARAMETER
+    INC_PARAM,                  //Increase Typing Term
+    DEC_PARAM,                  //Decrease Typing Term
 };
+
+//
+#include "romaji.c"
 
 //Alias
 #define MT_MT LT(_META,KC_TAB)    //hold:"META" tap:"tab"
@@ -60,8 +68,22 @@ enum custom_keycodes {
 #define JP_GRV LSFT(JP_AT)        //`
 #define JP_PIPE LSFT(KC_INT3)     //|
 
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [_NOBIX] = LAYOUT( \
+
+  [_QWERTY] = LAYOUT( \
+  //,-----------------------------------------------------|   |------------------------------------------------------.
+	   KC_ESC,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,        KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, KC_MINS,
+  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
+   MO(_EMACS),    KC_A,    KC_S,   MT_FD,    KC_F,   KC_G,         KC_H,    KC_J,   MT_FK,    KC_L, KC_SCLN, JP_QUOT,
+  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
+        MT_MT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,        KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,RCS_T(JP_PIPE),
+  //|--------+--------+--------+--------+--------+--------/   \--------+--------+--------+---------+--------+--------'
+                        KC_LCTL, IME_OFF,   MT_SS, KC_LGUI,     KC_RGUI,   MT_NE, IME_ON,  KC_RALT
+  //                  `--------+--------+--------+--------'   `--------+--------+--------+---------'
+  ),
+
+  [_HRMNY] = LAYOUT( \
   //,-----------------------------------------------------|   |------------------------------------------------------.
        KC_ESC,    KC_Q,    KC_W,    KC_D,    KC_R,    KC_G,        KC_J,    KC_U,    KC_I,    KC_V,    KC_P, JP_QUOT,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
@@ -99,11 +121,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_META] = LAYOUT( \
   //,-----------------------------------------------------|   |-----------------------------------------------------.
-      SND_ID,_______,_______,C(KC_END),C(KC_PGDN),C(KC_PGUP),   RGB_TOG, RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, _______,
+    SND_ID,DF(_QWERTY),DF(_HRMNY),C(KC_END),C(KC_PGDN),C(KC_PGUP),RGB_TOG,RGB_MOD,RGB_HUI, RGB_SAI, RGB_VAI, _______,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
     _______,C(KC_HOME),_______,C(KC_DEL),C(KC_F),C(KC_H), C(KC_BSPC),C(KC_LEFT),C(KC_DOWN),C(KC_UP),C(KC_RGHT),_______,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-      _______,  MC_LCK, _______, _______,  MC_DTL,  MC_DTR,     _______, _______, _______, _______, C(KC_Z),  MC_MIN,
+      _______,  MC_LCK, _______, _______,  MC_DTL,  MC_DTR,  INC_PARAM,DEC_PARAM,REPORT_PARAM,_______,C(KC_Z),MC_MIN,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
                         RST_MOD, _______, _______, _______,     _______, _______, _______, _______
   //                  `--------+--------+--------+--------'   `--------+--------+--------+--------'
@@ -122,16 +144,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 };
 
+
 #ifdef OLED_DRIVER_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-  if (!is_keyboard_master()) return OLED_ROTATION_180;
-  return rotation;
+    if (!is_keyboard_master()) return OLED_ROTATION_180;
+    return rotation;
 }
 
 void render_layer_state(void) {
   switch (get_highest_layer(layer_state)) {
-    case _NOBIX:
-      oled_write_ln_P(PSTR("Layer: Nobix"),false);
+    case _QWERTY:
+      oled_write_ln_P(PSTR("Layer: Qwerty"), false);
+      break;
+    case _HRMNY:
+      oled_write_ln_P(PSTR("Layer: Harmony"),false);
       break;
     case _NMB:
       oled_write_ln_P(PSTR("Layer: Number"), false);
@@ -196,6 +222,7 @@ void oled_task_user(void) {
 }
 #endif
 
+
 static bool SHIFT_PRESSED = false;
 static bool EXCEPTIONALY_SHIFT_PRESSED = false;
 
@@ -206,9 +233,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     #endif
   }
 
+  if(! process_romaji(keycode,record))
+    return false;
+
   switch (keycode) {
     case IME_OFF:
       if(record->event.pressed){
+        romaji_reset();
+        _romaji_mode = false;
         register_code(KC_LANG2);
         register_code(KC_MHEN);
       }else{
@@ -218,7 +250,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return false;
 
     case IME_ON:
-      if(record->event.pressed){ 
+      if(record->event.pressed){
+        romaji_reset();
+        _romaji_mode = true;
         register_code(KC_LANG1);
         register_code(KC_HENK);
       }else{
@@ -259,7 +293,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case RST_MOD:
       if(record->event.pressed){
           clear_keyboard();
-          layer_move(_NOBIX);
+          layer_move(_QWERTY);
         }
       return false;
       break;

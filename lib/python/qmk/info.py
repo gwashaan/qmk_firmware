@@ -74,19 +74,10 @@ def info_json(keyboard):
         _log_error(info_data, 'No LAYOUTs defined! Need at least one layout defined in the keyboard.h or info.json.')
 
     # Make sure we supply layout macros for the community layouts we claim to support
-    # FIXME(skullydazed): This should be populated into info.json and read from there instead
-    if 'LAYOUTS' in rules and info_data.get('layouts'):
-        # Match these up against the supplied layouts
-        supported_layouts = rules['LAYOUTS'].strip().split()
-        for layout_name in sorted(info_data['layouts']):
-            layout_name = layout_name[7:]
-
-            if layout_name in supported_layouts:
-                supported_layouts.remove(layout_name)
-
-        if supported_layouts:
-            for supported_layout in supported_layouts:
-                _log_error(info_data, 'Claims to support community layout %s but no LAYOUT_%s() macro found' % (supported_layout, supported_layout))
+    for layout in info_data.get('community_layouts', []):
+        layout_name = 'LAYOUT_' + layout
+        if layout_name not in info_data.get('layouts', {}) and layout_name not in info_data.get('layout_aliases', {}):
+            _log_error(info_data, 'Claims to support community layout %s but no %s() macro found' % (layout, layout_name))
 
     return info_data
 
@@ -558,7 +549,15 @@ def merge_info_jsons(keyboard, info_data):
             continue
 
         # Merge layout data in
+        if 'layout_aliases' in new_info_data:
+            info_data['layout_aliases'] = {**info_data.get('layout_aliases', {}), **new_info_data['layout_aliases']}
+            del new_info_data['layout_aliases']
+
         for layout_name, layout in new_info_data.get('layouts', {}).items():
+            if layout_name in info_data.get('layout_aliases', {}):
+                _log_warning(info_data, f"info.json uses alias name {layout_name} instead of {info_data['layout_aliases'][layout_name]}")
+                layout_name = info_data['layout_aliases'][layout_name]
+
             if layout_name in info_data['layouts']:
                 for new_key, existing_key in zip(layout['layout'], info_data['layouts'][layout_name]['layout']):
                     existing_key.update(new_key)
@@ -568,7 +567,7 @@ def merge_info_jsons(keyboard, info_data):
 
         # Update info_data with the new data
         if 'layouts' in new_info_data:
-            del (new_info_data['layouts'])
+            del new_info_data['layouts']
 
         deep_update(info_data, new_info_data)
 

@@ -28,23 +28,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define MASTER_RIGHT
 // #define EE_HANDS
 
-#define USE_SERIAL_PD2
-
 #define TAPPING_FORCE_HOLD
-#define TAPPING_TERM 180
 #define PERMISSIVE_HOLD
+#define TAPPING_TERM 180
 #define TAPPING_TOGGLE 1
 
-#ifdef RGBLIGHT_ENABLE
-    #undef RGBLED_NUM
-    #define RGBLIGHT_ANIMATIONS
-    #define RGBLED_NUM 27
-    #define RGBLIGHT_LIMIT_VAL 120
-    #define RGBLIGHT_HUE_STEP 10
-    #define RGBLIGHT_SAT_STEP 17
-    #define RGBLIGHT_VAL_STEP 17
-#endif
+/* WS2812B RGB LED */
+#define RGB_DI_PIN D3
+#define RGBLIGHT_ANIMATIONS
+#define RGBLED_NUM 12
+#define RGBLIGHT_SPRIT
+#define RGBLED_SPLIT {6,6} //Number of LEDs
+#define RGBLIGHT_SLEEP
 
-#define OLED_FONT_H "keyboards/crkbd/lib/glcdfont.c"
+// The LEDs on the slave half go in reverse order
+#define RGBLIGHT_LED_MAP {0,1,2,3,4,5,11,10,9,8,7,6}
 
-#define ROMAJI_TERM 75
+#define OLED_FONT_H "keyboards/claw44/lib/glcdfont.c"

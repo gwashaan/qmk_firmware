@@ -14,7 +14,7 @@ enum custom_keycodes {
 #define MT_FD LT(4,KC_D)          //hold:"Function" tap:"D"
 #define MT_FT LT(4,KC_T)          //hold:"Function" tap:"T"
 #define MT_FE LT(4,KC_E)          //hold:"Function" tap:"E"
-#define MT_EM LT(3,KC_MHEN)      //hold :"emacs" tap:"MHEN"
+#define MT_EM CTL_T(KC_MHEN)      //hold :"CTRL" tap:"MHEN"
 #define MT_EH LT(3,KC_HENK)      //hold:"emacs" tap:"HENK"
 
 #define MC_PSC  LGUI(S(KC_S))     //Print screen
@@ -24,32 +24,14 @@ enum custom_keycodes {
 #define MC_MIN  LGUI(KC_M)        //Window Minimize
 #define MC_SRH  LGUI(KC_S)        //Search
 
-#define JP_AT KC_LBRC             // @
-#define JP_CIRC KC_EQL            // ^, ~
-#define JP_COLN KC_QUOT           // :, *
-#define JP_LBRC KC_RBRC           // [
-#define JP_RBRC KC_NUHS           // ]
-#define JP_LCBR LSFT(JP_LBRC)     // {
-#define JP_RCBR LSFT(JP_RBRC)     // }
-#define JP_LPRN LSFT(KC_8)        // (
-#define JP_RPRN LSFT(KC_9)        // )
-#define JP_QUOT LSFT(KC_7)        //',"
-#define JP_AMPR LSFT(KC_6)        // &
-#define JP_UNDS LSFT(KC_INT1)     //_
-#define JP_PLUS LSFT(KC_SCLN)     // +
-#define JP_EQL LSFT(KC_MINS)      // =
-#define JP_ASTR LSFT(JP_COLN)     // *
-#define JP_GRV LSFT(JP_AT)        //`
-#define JP_PIPE LSFT(KC_INT3)     //|
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------|   |------------------------------------------------------.
-       KC_ESC,    KC_Q,    KC_W,    KC_D,    KC_R,    KC_G,        KC_J,    KC_U,    KC_I,    KC_P,    KC_V, JP_QUOT,
+       KC_ESC,    KC_Q,    KC_W,    KC_D,    KC_R,    KC_G,        KC_J,    KC_U,    KC_I,    KC_P,    KC_V, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
         MO(3),    KC_K,    KC_S,   MT_FT,    KC_N,    KC_M,        KC_L,    KC_A,   MT_FE,    KC_O,    KC_Y, KC_SCLN,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-       KC_TAB,    KC_Z,    KC_X,    KC_C,    KC_H,    KC_B,     KC_MINS,    KC_F, KC_COMM,  KC_DOT, KC_SLSH,RCS_T(JP_PIPE),
+       KC_TAB,    KC_Z,    KC_X,    KC_C,    KC_H,    KC_B,     KC_MINS,    KC_F, KC_COMM,  KC_DOT, KC_SLSH,RCS_T(KC_PIPE),
   //|--------+--------+--------+--------+--------+--------/   \--------+--------+--------+---------+--------+--------'
                                  KC_LCTL,   MT_EM, MT_SSPC,     MT_NENT,   MT_EH,  KC_RALT
   //                           `--------+--------+--------'   `--------+--------+---------'
@@ -59,9 +41,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------|   |------------------------------------------------------.
        KC_ESC,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,        KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, KC_MINS,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-        MO(3),    KC_A,    KC_S,   MT_FD,    KC_F,    KC_G,        KC_H,    KC_J,   MT_FK,    KC_L, KC_SCLN, JP_QUOT,
+        MO(3),    KC_A,    KC_S,   MT_FD,    KC_F,    KC_G,        KC_H,    KC_J,   MT_FK,    KC_L, KC_SCLN, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-       KC_TAB,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,        KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,RCS_T(JP_PIPE),
+       KC_TAB,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,        KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,RCS_T(KC_PIPE),
   //|--------+--------+--------+--------+--------+--------/   \--------+--------+--------+---------+--------+--------'
                                  KC_LCTL, KC_MHEN, MT_SSPC,     MT_NENT, KC_HENK,  KC_RALT
   //                           `--------+--------+--------'   `--------+--------+---------'
@@ -69,11 +51,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [2] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------|   |-----------------------------------------------------.
-       JP_GRV, KC_EXLM,   JP_AT, KC_HASH,  KC_DLR, KC_PERC,     JP_CIRC, JP_AMPR, JP_ASTR, JP_LPRN, JP_RPRN,  JP_EQL,
+       KC_GRV, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,     KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN,  KC_EQL,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-      _______,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,        KC_6,    KC_7,    KC_8,    KC_9,    KC_0, JP_PLUS,
+      _______,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,        KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_PLUS,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-      _______, JP_UNDS, KC_MINS, JP_LPRN, JP_LCBR, JP_LBRC,     JP_RBRC, JP_RCBR, JP_RPRN,  KC_DOT, KC_SLSH, KC_MINS,
+      _______, KC_UNDS, KC_MINS, KC_LPRN, KC_LCBR, KC_LBRC,     KC_RBRC, KC_RCBR, KC_RPRN,  KC_DOT, KC_SLSH, KC_MINS,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
                                  _______, _______, _______,     _______, _______, RST_MOD
   //                           `--------+--------+--------'   `--------+--------+---------'
@@ -102,7 +84,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                  _______, _______, _______,     _______, _______, RST_MOD
   //                           `--------+--------+--------'   `--------+--------+--------'
   ),
-
 };
 
 #ifdef OLED_DRIVER_ENABLE
@@ -206,10 +187,6 @@ void oled_task_user(void) {
 
 #endif // OLED_DRIVER_ENABLE
 
-
-static bool SHIFT_PRESSED = false;
-static bool EXCEPTIONALY_SHIFT_PRESSED = false;
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
 #ifdef OLED_DRIVER_ENABLE
@@ -218,14 +195,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
 
   switch (keycode) {
-    case MT_SSPC:
-      if(record->event.pressed){
-        SHIFT_PRESSED = true;
-      }else{
-        SHIFT_PRESSED = false;
-      }
-      break;
-
     case KILL_L:
       if(record->event.pressed){
         SEND_STRING(SS_DOWN(X_LSFT) SS_TAP(X_END) SS_UP(X_LSFT) SS_TAP(X_DEL));
@@ -247,69 +216,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }
       return false;
       break;
-
-    default:
-      if(SHIFT_PRESSED || EXCEPTIONALY_SHIFT_PRESSED){
-        switch(keycode){
-          case KC_MINS:
-            if(record->event.pressed){
-              register_code(KC_INT1);
-              EXCEPTIONALY_SHIFT_PRESSED = true;
-            }else{
-              unregister_code(KC_LSFT);
-              if(SHIFT_PRESSED){
-                register_code(KC_LSFT);
-              }
-              EXCEPTIONALY_SHIFT_PRESSED =false;
-            }
-            return false;
-            break;
-
-          case KC_SCLN:
-            if(record->event.pressed){
-              unregister_code(KC_LSFT);
-              register_code(KC_QUOT);
-              EXCEPTIONALY_SHIFT_PRESSED = true;
-            }else{
-              unregister_code(KC_LSFT);
-              if(SHIFT_PRESSED){
-                register_code(KC_LSFT);
-              }
-              EXCEPTIONALY_SHIFT_PRESSED =false;
-            }
-            return false;
-            break;
-
-          case JP_QUOT:
-            if(record->event.pressed){
-              register_code(KC_2);
-              EXCEPTIONALY_SHIFT_PRESSED = true;
-            }else{
-              unregister_code(KC_LSFT);
-              if(SHIFT_PRESSED){
-                register_code(KC_LSFT);
-              }
-              EXCEPTIONALY_SHIFT_PRESSED =false;
-            }
-            return false;
-            break;
-
-          case KC_ESC:
-            if(record->event.pressed){
-              register_code(KC_EQL);
-              EXCEPTIONALY_SHIFT_PRESSED = true;
-            }else{
-              unregister_code(KC_LSFT);
-              if(SHIFT_PRESSED){
-                register_code(KC_LSFT);
-              }
-            EXCEPTIONALY_SHIFT_PRESSED = false;
-            }
-            return false;
-            break;
-
         }
-      }
-    }
   return true;
 }

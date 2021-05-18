@@ -8,8 +8,7 @@
 
 //Declare layers
 enum layer_number {
-    _NOBIX = 0,
-    _QWERTY,
+    _QWERTY=0,
     _NMB,
     _EMACS,
     _FN,
@@ -23,14 +22,13 @@ enum custom_keycodes {
 };
 
 //Alias
+#define MT_FTAB LT(_FN,KC_TAB)    //hold:"Function" tap:"tab"
 #define MT_SSPC LSFT_T(KC_SPC)    //hold:"Shift" tap:"Space"
 #define MT_NENT LT(_NMB,KC_ENT)   //hold:"NMB" tap:"Enter"
 #define MT_FK LT(_FN,KC_K)        //hold:"Function" tap:"k"
 #define MT_FD LT(_FN,KC_D)        //hold:"Function" tap:"D"
 #define MT_FT LT(_FN,KC_T)        //hold:"Function" tap:"T"
 #define MT_FE LT(_FN,KC_E)        //hold:"Function" tap:"E"
-#define MT_EM LT(_EMACS,KC_MHEN)  //hold:"emacs" tap:"MHEN"
-#define MT_EH LT(_EMACS,KC_HENK)  //hold:"emacs" tap:"HENK"
 
 #define MC_PSC LGUI(S(KC_S))         //Print screen
 #define MC_DTR LGUI(C(KC_RIGHT))     //Desk top move right
@@ -59,27 +57,15 @@ enum custom_keycodes {
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-  [_NOBIX] = LAYOUT( \
-  //,-----------------------------------------------------|   |------------------------------------------------------.
-       KC_ESC,    KC_Q,    KC_W,    KC_D,    KC_R,    KC_G,        KC_J,    KC_U,    KC_I,    KC_V,    KC_P, JP_QUOT,
-  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-   MO(_EMACS),    KC_K,    KC_S,   MT_FT,    KC_N,    KC_M,        KC_L,    KC_A,   MT_FE,    KC_O,    KC_Y, KC_SCLN,
-  //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-       KC_TAB,    KC_Z,    KC_X,    KC_C,    KC_H,    KC_B,     KC_MINS,    KC_F, KC_COMM,  KC_DOT, KC_SLSH,RCS_T(JP_PIPE),
-  //|--------+--------+--------+--------+--------+--------/   \--------+--------+--------+---------+--------+--------'
-                        KC_LCTL,   MT_EM, MT_SSPC, KC_LGUI,     KC_RGUI, MT_NENT,   MT_EH,  KC_RALT
-  //                  `--------+--------+--------+--------'   `--------+--------+--------+---------'
-  ),
-
   [_QWERTY] = LAYOUT( \
   //,-----------------------------------------------------|   |------------------------------------------------------.
        KC_ESC,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,        KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, KC_MINS,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
    MO(_EMACS),    KC_A,    KC_S,   MT_FD,    KC_F,   KC_G,         KC_H,    KC_J,   MT_FK,    KC_L, KC_SCLN, JP_QUOT,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-       KC_TAB,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,        KC_N,    KC_M, KC_COMM,  KC_DOT,KC_SLSH,RCS_T(JP_PIPE),
+      MT_FTAB,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,        KC_N,    KC_M, KC_COMM,  KC_DOT,KC_SLSH,RCS_T(JP_PIPE),
   //|--------+--------+--------+--------+--------+--------/   \--------+--------+--------+---------+--------+--------'
-                        KC_LCTL,   MT_EM, MT_SSPC, KC_LGUI,     KC_RGUI, MT_NENT,   MT_EH,  KC_RALT
+                        KC_LCTL, KC_MHEN, MT_SSPC, KC_LGUI,     KC_RGUI, MT_NENT, KC_HENK,  KC_RALT
   //                  `--------+--------+--------+--------'   `--------+--------+--------+---------'
   ),
 
@@ -91,31 +77,31 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
       _______, JP_UNDS, KC_MINS, JP_LPRN, JP_LCBR, JP_LBRC,     JP_RBRC, JP_RCBR, JP_RPRN,  KC_DOT, KC_SLSH, KC_MINS,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-                        _______, _______, _______, _______,     _______, _______, _______, RST_MOD
+                        RST_MOD, _______, _______, _______,     _______, _______, _______, _______
   //                  `--------+--------+--------+--------'   `--------+--------+--------+--------'
   ),
 
   [_EMACS] = LAYOUT( \
   //,-----------------------------------------------------|   |-----------------------------------------------------.
-       MC_SRH, C(KC_A),  MC_LCK,  KC_END, KC_PGDN, KC_PGUP,     C(KC_V),S(KC_TAB), KC_TAB,   INS_L,  MC_PSC,  KC_ESC,
+       MC_SRH, C(KC_A), C(KC_X),  KC_END, KC_PGDN, KC_PGUP,     C(KC_V),S(KC_TAB), KC_TAB,   INS_L,  MC_PSC,  KC_ESC,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
       _______, KC_HOME,  KILL_L,  KC_DEL, C(KC_F), C(KC_H),     KC_BSPC, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT,   KC_F2,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-      _______, C(KC_Z), C(KC_X), C(KC_C), C(KC_V), C(KC_Y), KC_MS_BTN3,KC_ENT,S(KC_LEFT),S(KC_RGHT),C(KC_Z),  MC_MIN,
+      _______, MC_LCK, C(KC_Y), C(KC_C),  MC_DTL,  MC_DTR, KC_MS_BTN3,KC_ENT,S(KC_LEFT),S(KC_RGHT),C(KC_Z),  MC_MIN,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-                         MC_DTL,  MC_DTR, _______, _______,     _______, _______, _______, RST_MOD
+                        RST_MOD, _______, _______, _______,     _______, _______, _______, _______
   //                  `--------+--------+--------+--------'   `--------+--------+--------+--------'
   ),
 
   [_FN] = LAYOUT( \
   //,-----------------------------------------------------|   |-----------------------------------------------------.
-      _______,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,      KC_TAB, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R,S(KC_TAB),
+      _______,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,     _______, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, _______,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
       _______,   KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,  A(KC_LEFT), KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R,A(KC_RIGHT),
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-      _______,RGB_TOG,RGB_MOD,RGB_HUI,RGB_SAI,RGB_VAI,   _______,KC_MS_BTN1,KC_MS_BTN3,KC_MS_BTN2,DF(_EMACS),DF(_NOBIX),
+      _______, RGB_TOG, RGB_MOD, RGB_HUI,  MC_DTL,  MC_DTR,  _______,KC_MS_BTN1,KC_MS_BTN3,KC_MS_BTN2,RGB_SAI,RGB_VAI,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-                        _______, _______, _______, _______,     _______, _______, _______, RST_MOD
+                        RST_MOD, _______, _______, _______,     _______, _______, _______, _______
   //                  `--------+--------+--------+--------'   `--------+--------+--------+--------'
   ),
 };
@@ -129,9 +115,6 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 
 void render_layer_state(void) {
   switch (get_highest_layer(layer_state)) {
-    case _NOBIX:
-      oled_write_ln_P(PSTR("Layer: NOBIX"), false);
-      break;
     case _QWERTY:
       oled_write_ln_P(PSTR("Layer: QWERTY"),false);
       break;
@@ -242,7 +225,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         switch(keycode){
           case KC_MINS:
             if(record->event.pressed){
-              register_code(KC_INT1);                 //If pressed "SHIFT" then "_"
+              register_code(KC_INT1);
               EXCEPTIONALY_SHIFT_PRESSED = true;
             }else{
               unregister_code(KC_LSFT);
@@ -257,7 +240,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           case KC_SCLN:
             if(record->event.pressed){
               unregister_code(KC_LSFT);
-              register_code(KC_QUOT);               //If pressed "SHIFT" then ":"
+              register_code(KC_QUOT);
               EXCEPTIONALY_SHIFT_PRESSED = true;
             }else{
               unregister_code(KC_LSFT);
@@ -271,7 +254,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
           case JP_QUOT:
             if(record->event.pressed){
-              register_code(KC_2);                //If pressed "SHIFT" then " " "
+              register_code(KC_2);
               EXCEPTIONALY_SHIFT_PRESSED = true;
             }else{
               unregister_code(KC_LSFT);
@@ -285,7 +268,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
           case KC_ESC:
             if(record->event.pressed){
-              register_code(KC_EQL);            //
+              register_code(KC_EQL);
               EXCEPTIONALY_SHIFT_PRESSED = true;
             }else{
               unregister_code(KC_LSFT);

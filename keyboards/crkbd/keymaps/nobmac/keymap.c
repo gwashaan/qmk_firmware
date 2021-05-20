@@ -12,10 +12,9 @@ enum custom_keycodes {
 #define MT_NENT LT(2,KC_ENT)      //hold:"NMB" tap:"Enter"
 #define MT_FK LT(4,KC_K)          //hold:"Function" tap:"K"
 #define MT_FD LT(4,KC_D)          //hold:"Function" tap:"D"
-#define MT_FT LT(4,KC_T)          //hold:"Function" tap:"T"
 #define MT_FE LT(4,KC_E)          //hold:"Function" tap:"E"
-#define MT_EM CTL_T(KC_MHEN)      //hold :"CTRL" tap:"MHEN"
-#define MT_EH LT(3,KC_HENK)      //hold:"emacs" tap:"HENK"
+#define MT_LCML2 LCMD(KC_LANG2)   //hold:"L COMMAND" tap:"LANG2"
+#define MT_RCML1 RCMD(KC_LANG1)   //hold:"R COMMAND" tap:"LANG1"
 
 #define MC_PSC  LGUI(S(KC_S))     //Print screen
 #define MC_DTR  LGUI(C(KC_RIGHT)) //Desk top move right
@@ -27,25 +26,25 @@ enum custom_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------|   |------------------------------------------------------.
-       KC_ESC,    KC_Q,    KC_W,    KC_D,    KC_R,    KC_G,        KC_J,    KC_U,    KC_I,    KC_P,    KC_V, KC_QUOT,
+       KC_ESC,    KC_Q,    KC_W,    KC_T,    KC_R,    KC_G,        KC_J,    KC_U,    KC_I,    KC_P,    KC_V, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-        MO(3),    KC_K,    KC_S,   MT_FT,    KC_N,    KC_M,        KC_L,    KC_A,   MT_FE,    KC_O,    KC_Y, KC_SCLN,
+        MO(3),    KC_K,    KC_S,   MT_FD,    KC_N,    KC_M,        KC_L,    KC_A,   MT_FE,    KC_O,    KC_Y, KC_SCLN,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
        KC_TAB,    KC_Z,    KC_X,    KC_C,    KC_H,    KC_B,     KC_MINS,    KC_F, KC_COMM,  KC_DOT, KC_SLSH,RCS_T(KC_PIPE),
   //|--------+--------+--------+--------+--------+--------/   \--------+--------+--------+---------+--------+--------'
-                                 KC_LCTL,   MT_EM, MT_SSPC,     MT_NENT,   MT_EH,  KC_RALT
+                                 KC_LCTL,MT_LCML2, MT_SSPC,     MT_NENT,MT_RCML1,  KC_RALT
   //                           `--------+--------+--------'   `--------+--------+---------'
   ),
 
   [1] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------|   |------------------------------------------------------.
-       KC_ESC,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,        KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, KC_MINS,
+       KC_ESC,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,        KC_Y,    KC_U,    KC_I,    KC_V,    KC_P, KC_MINS,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
         MO(3),    KC_A,    KC_S,   MT_FD,    KC_F,    KC_G,        KC_H,    KC_J,   MT_FK,    KC_L, KC_SCLN, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
        KC_TAB,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,        KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,RCS_T(KC_PIPE),
   //|--------+--------+--------+--------+--------+--------/   \--------+--------+--------+---------+--------+--------'
-                                 KC_LCTL, KC_MHEN, MT_SSPC,     MT_NENT, KC_HENK,  KC_RALT
+                                 KC_LCTL,KC_LANG2, MT_SSPC,     MT_NENT,KC_LANG1,  KC_RALT
   //                           `--------+--------+--------'   `--------+--------+---------'
   ),
 

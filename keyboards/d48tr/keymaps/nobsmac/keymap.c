@@ -11,7 +11,7 @@ extern keymap_config_t keymap_config;
 // Layer names don't all need to be of the same length, obviously, and you can also skip them
 // entirely and just use numbers.
 enum layer_number {
-    _HRMNY = 0,
+    _NOBIX = 0,
     _QWERTY,
     _NMB,
     _EMACS,
@@ -66,11 +66,11 @@ enum custom_keycodes {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
- [_HRMNY] = KEYMAP(
+ [_NOBIX] = KEYMAP(
   //,-----------------------------------------------------|   |------------------------------------------------------.
-       KC_ESC,    KC_Q,    KC_W,    KC_D,    KC_R,    KC_G,        KC_J,    KC_U,    KC_I,    KC_V,    KC_P, KC_QUOT,
+       KC_ESC,    KC_Q,    KC_W,    KC_T,    KC_R,    KC_G,        KC_J,    KC_U,    KC_I,    KC_P,    KC_V, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-   MO(_EMACS),    KC_K,    KC_S,   MT_FT,    KC_N,    KC_M,        KC_L,    KC_A,   MT_FE,    KC_O,    KC_Y, KC_SCLN,
+   MO(_EMACS),    KC_K,    KC_S,   MT_FD,    KC_N,    KC_M,        KC_L,    KC_A,   MT_FE,    KC_O,    KC_Y, KC_SCLN,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
         MT_MT,    KC_Z,    KC_X,    KC_C,    KC_H,    KC_B,     KC_MINS,    KC_F, KC_COMM,  KC_DOT, KC_SLSH, KC_BSLS,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|

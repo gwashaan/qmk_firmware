@@ -14,8 +14,6 @@ enum custom_keycodes {
 #define MT_FD LT(4,KC_D)          //hold:"Function" tap:"D"
 #define MT_FT LT(4,KC_T)          //hold:"Function" tap:"T"
 #define MT_FE LT(4,KC_E)          //hold:"Function" tap:"E"
-#define MT_EM LT(3,KC_MHEN)      //hold :"emacs" tap:"MHEN"
-#define MT_EH LT(3,KC_HENK)      //hold:"emacs" tap:"HENK"
 
 #define MC_PSC  LGUI(S(KC_S))     //Print screen
 #define MC_DTR  LGUI(C(KC_RIGHT)) //Desk top move right
@@ -45,13 +43,13 @@ enum custom_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------|   |------------------------------------------------------.
-       KC_ESC,    KC_Q,    KC_W,    KC_D,    KC_R,    KC_G,        KC_J,    KC_U,    KC_I,    KC_P,    KC_V, JP_QUOT,
+       KC_ESC,    KC_Q,    KC_W,    KC_T,    KC_R,    KC_G,        KC_J,    KC_U,    KC_I,    KC_P,    KC_V, JP_QUOT,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-        MO(3),    KC_K,    KC_S,   MT_FT,    KC_N,    KC_M,        KC_L,    KC_A,   MT_FE,    KC_O,    KC_Y, KC_SCLN,
+        MO(3),    KC_K,    KC_S,   MT_FD,    KC_N,    KC_M,        KC_L,    KC_A,   MT_FE,    KC_O,    KC_Y, KC_SCLN,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
        KC_TAB,    KC_Z,    KC_X,    KC_C,    KC_H,    KC_B,     KC_MINS,    KC_F, KC_COMM,  KC_DOT, KC_SLSH,RCS_T(JP_PIPE),
   //|--------+--------+--------+--------+--------+--------/   \--------+--------+--------+---------+--------+--------'
-                                 KC_LCTL,   MT_EM, MT_SSPC,     MT_NENT,   MT_EH,  KC_RALT
+                                 KC_LCTL, KC_MHEN, MT_SSPC,     MT_NENT, KC_HENK,  KC_RALT
   //                           `--------+--------+--------'   `--------+--------+---------'
   ),
 
@@ -81,11 +79,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [3] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------|   |-----------------------------------------------------.
-       MC_SRH, C(KC_A), MC_LCK,  KC_END, KC_PGDN, KC_PGUP,     C(KC_V),S(KC_TAB), KC_TAB,   INS_L,  MC_PSC,  KC_ESC,
+       MC_SRH, C(KC_A), C(KC_X),  KC_END, KC_PGDN, KC_PGUP,     C(KC_V),S(KC_TAB), KC_TAB,   INS_L,  MC_PSC,  KC_ESC,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
       _______, KC_HOME,  KILL_L,  KC_DEL,C(KC_F),  C(KC_H),     KC_BSPC, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT,   KC_F2,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-      _______, C(KC_Z), C(KC_X), C(KC_C), C(KC_V), C(KC_Y),  KC_MS_BTN3, KC_ENT,S(KC_LEFT),S(KC_RGHT),C(KC_Z),MC_MIN,
+       MC_LCK, C(KC_Z), C(KC_X), C(KC_C), C(KC_V), C(KC_Y),  KC_MS_BTN3, KC_ENT,S(KC_LEFT),S(KC_RGHT),C(KC_Z),MC_MIN,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
                                   MC_DTL,  MC_DTR, _______,     _______, _______, RST_MOD
   //                           `--------+--------+--------'   `--------+--------+--------'

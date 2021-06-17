@@ -43,11 +43,11 @@ enum custom_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------|   |------------------------------------------------------.
-       KC_ESC,    KC_Q,    KC_W,    KC_T,    KC_R,    KC_G,        KC_J,    KC_U,    KC_I,    KC_P,    KC_V, JP_QUOT,
+       KC_ESC,    KC_Q,    KC_H,    KC_T,    KC_R,    KC_W,        KC_J,    KC_U,    KC_I,    KC_P,    KC_V, JP_QUOT,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-        MO(3),    KC_K,    KC_S,   MT_FD,    KC_N,    KC_M,        KC_L,    KC_A,   MT_FE,    KC_O,    KC_Y, KC_SCLN,
+        MO(3),    KC_K,    KC_S,   MT_FD,    KC_N,    KC_G,        KC_L,    KC_A,   MT_FE,    KC_O,    KC_Y, KC_SCLN,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
-       KC_TAB,    KC_Z,    KC_X,    KC_C,    KC_H,    KC_B,     KC_MINS,    KC_F, KC_COMM,  KC_DOT, KC_SLSH,RCS_T(JP_PIPE),
+       KC_TAB,    KC_Z,    KC_X,    KC_C,    KC_M,    KC_B,     KC_MINS,    KC_F, KC_COMM,  KC_DOT, KC_SLSH,RCS_T(JP_PIPE),
   //|--------+--------+--------+--------+--------+--------/   \--------+--------+--------+---------+--------+--------'
                                  KC_LCTL, KC_MHEN, MT_SSPC,     MT_NENT, KC_HENK,  KC_RALT
   //                           `--------+--------+--------'   `--------+--------+---------'
@@ -79,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [3] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------|   |-----------------------------------------------------.
-       MC_SRH, C(KC_A), C(KC_X),  KC_END, KC_PGDN, KC_PGUP,     C(KC_V),S(KC_TAB), KC_TAB,   INS_L,  MC_PSC,  KC_ESC,
+       MC_SRH, KC_PGDN, KC_PGUP,  KC_END, C(KC_A), XXXXXXX,     C(KC_V),S(KC_TAB), KC_TAB,   INS_L,  MC_PSC,  KC_ESC,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
       _______, KC_HOME,  KILL_L,  KC_DEL,C(KC_F),  C(KC_H),     KC_BSPC, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT,   KC_F2,
   //|--------+--------+--------+--------+--------+--------|   |--------+--------+--------+--------+--------+--------|
